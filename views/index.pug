@@ -1,0 +1,102 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title Hotel Management System ERP
+    meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name='viewport')
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')
+    link(rel='stylesheet', href='/dist/css/AdminLTE.min.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic')
+    style. 
+       input[type="checkbox"] {
+       accent-color: #6da252;
+      } 
+    block style
+
+  body.hold-transition.skin-blue.layout-top-nav
+    .wrapper
+        .content-wrapper
+            section.content-header
+                h1
+                    | Spaceship Service List &nbsp;&nbsp;
+                    span.new-button
+                        a.btn.btn-primary.btn-sm(href='#' data-toggle='modal', data-target='#add-edit-permission-modal')
+                            span.fa.fa-plus
+                            |  &nbsp;Add New
+            section.content
+                    .row
+                        .col-md-12.col-xs-12
+                            .box.box-parrot
+                                
+                                .box-body 
+                                    .table.table-responsive
+                                        table#dataTable.table.table-striped.table-hover
+                                            thead
+                                                tr
+                                                    th 
+                                                     a(href='#') Id
+                                                    th 
+                                                     a(href='#') Title
+                                                    th 
+                                                     a(href='#') Description
+                                                    th 
+                                                     a(href='#') Image
+                                                    th
+                                                     a(href='#') Actions
+
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/bower_components/datatables.net/js/jquery.dataTables.min.js')
+    script(src='/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')
+    script.
+     $('#dataTable').DataTable()
+    //-   "use strict";
+    //-     var KTDatatablesDataSourceAjaxServer = function () {
+    //-         var initTable1 = function () {
+    //-             var base_url = '/list';
+    //-             $('#dataTable').DataTable({
+    //-                 "responsive": true,
+    //-                 "searchDelay": 500,
+    //-                 "processing": true,
+    //-                 "pageLength": 10,
+    //-                 "lengthMenu": [[5,10, 15, 20,100, -1], [5,10, 15, 20,100, "Todos"]],
+    //-                 "serverSide": true,
+    //-                 "ajax": {
+    //-                     "url": base_url,
+    //-                     "dataType": 'json',
+    //-                 },
+    //-                 columns: [{
+    //-                     "data": 'id'
+    //-                 }, {
+    //-                     "data": 'node_id'
+    //-                 }, {
+    //-                     "data": 'number'
+    //-                 }, {
+    //-                     "data": 'title'
+    //-                 },{
+    //-                     "data": 'userLogin'
+    //-                 },{
+    //-                     "data": 'userType'
+    //-                 }, {
+    //-                     "data": 'state'
+    //-                 }, {
+    //-                     "data": 'author_association'
+    //-                 }, {
+    //-                     "data": 'actions'
+    //-                 }]
+
+    //-             });
+    //-         };
+    //-         return {
+    //-             init: function () {
+    //-                 initTable1();
+    //-             },
+    //-         };
+    //-     }();
+    //-     jQuery(document).ready(function () {
+    //-         KTDatatablesDataSourceAjaxServer.init();
+    //-     });
+    block script

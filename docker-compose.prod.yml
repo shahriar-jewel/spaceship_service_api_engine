@@ -1,0 +1,31 @@
+version: '3'
+services:
+    mongo:
+        image: mongo
+        environment:
+            - MONGO_INITDB_DATABASE=tmdb
+        volumes:
+            - /docker/data:/data/db
+        ports:
+            - '27017-27019:27017-27019'
+        networks:
+            - app-network
+    prod:
+        image: node:12-alpine
+        volumes:
+            - ./docker/node_modules:/usr/src/service/node_modules
+            - .:/usr/src/service
+        environment:
+            - NODE_ENV=development
+        working_dir: /usr/src/service
+        command: npm run watch
+        ports:
+            - 80:3000
+        networks:
+            - app-network
+        depends_on:
+            - mongo
+
+networks:
+    app-network:
+        driver: bridge

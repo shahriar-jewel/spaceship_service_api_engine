@@ -1,0 +1,19 @@
+{
+    "host": "http://localhost",
+    "port": 3004,
+    "smtp": {
+        "from": "No Reply<no-reply@btracsl.com>",
+        "host": "btracsl.mithiskyconnect.com",
+        "port": 587,
+        "secure": false,
+        "auth": {
+            "user": "no-reply@btracsl.com",
+            "pass": "NOrePly#%2022"
+        }
+    },
+    "mongoUrl": "mongodb://localhost:27017/weight_sensor_db",
+    "cookieSecret": "P>twUC2.9mNurJN%fW(!esGwua:!e(Pu8bHfTXW grck3g9/J@*W3MuEB,FE#/=m",
+    "sessionSecret": "P>twUC2.9mVurJN%fW(!esGwua:!e(Pu8bHfTXW grck3g9/J@*W3MuEB,FE#/=m",
+    "authSecret": "TFqA$uc4hD5VV(NS*vF=f3$jaCsw6/3U/w%9yu)Py,#&w)kG2(pAgAP9@)3,uVqt",
+    "authSalt": "*vF=f3$wFCsw6/3U/w%9yu)Pt,#&w)kG2(pAgAP9@)3"
+}
