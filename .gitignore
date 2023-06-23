@@ -40,7 +40,6 @@ coverage
 
 # Dependency directory
 node_modules
-bower_components
 docker/data/
 
 # Editors
@@ -52,7 +51,6 @@ docker/data/
 Thumbs.db
 
 # Ignore built ts files
-dist/**/*
 build/
 uploads/
 

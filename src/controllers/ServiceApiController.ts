@@ -1,7 +1,5 @@
 import { Controller } from "../core/Controller";
 import { NextFunc, HttpRequest, HttpResponse } from "../core/Types";
-import fs from "fs-extra";
-import multiparty from "multiparty";
 import { IServiceApiProvider } from "../core/IServiceApiProvider";
 
 export class ServiceApiController extends Controller {
