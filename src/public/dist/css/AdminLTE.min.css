@@ -51,6 +51,12 @@
  .new-button{
     margin-right: 5px;
  }
+
+ div.required .control-label:not(span):after {
+    content: ' *';
+    color: #F00;
+    font-weight: bold;
+}
  
  /* my css ends  */
  .layout-boxed .wrapper {

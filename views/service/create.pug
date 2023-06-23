@@ -1,0 +1,41 @@
+#service-modal.modal.fade
+    .modal-dialog.modal-md
+        .modal-content
+          form#service-form(role='form', action='#', method='POST' enctype="multipart/form-data")
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                 span(aria-hidden='true') &times;
+                h4.modal-title Add New Service
+            .modal-body
+                  .row
+                    .col-md-12
+                        .form-group.required
+                            label.control-label(for='title') Service Title
+                            .input-group
+                                span.input-group-addon
+                                        i.fa.fa-list-alt
+                                input.form-control(type='text', name='title' id='title' placeholder='Enter Service Name')
+                    .col-md-12
+                        .form-group.required
+                            label.control-label(for='description') Description
+                            textarea.form-control(rows='3', name='description' id='description' placeholder='Enter Description')
+                    .col-md-6
+                        .form-group.required
+                            label.control-label(for='image') Image
+                            .input-group
+                                span.input-group-addon
+                                        i.fa.fa-camera
+                                input.form-control(type='file', onchange="readURL(this);", name='image' id='image' placeholder='Enter Service Picture')
+                    .col-md-6
+                        .form-group
+                            label.control-label(for='preview') Image Preview
+                            .input-group
+                                img#uploaded_image.profile-user-img.img-responsive.img-square.img-lg(src="/dist/img/image.png", alt='Service Image')
+            .modal-footer
+                div.pull-left
+                    button.btn.btn-primary#button-create-service(type='button', data-loading-text='Loading...')
+                        span.fa.fa-save
+                        |  &nbsp;Save
+                    button.btn.btn-default(type='button', data-dismiss='modal')
+                        span.fa.fa-times-circle
+                        |  &nbsp;Cancel

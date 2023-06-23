@@ -10,11 +10,13 @@ import { Application } from "./core/Application";
 import { Config } from "./core/Config";
 
 // Providers
+import { ServiceProvider } from "./providers/ServiceProvider";
 
 // Formatters
 import { dateFormatter } from "./ftms/date";
 
 // Controllers
+import { ServiceController } from "./controllers/ServiceController";
 
 // Crons
 import { SendReportMail } from "./crons/SendReportMail";
@@ -38,11 +40,13 @@ app.viewDir("views");
 app.viewEngine("pug");
 app.setStatic(path.join(__dirname, "public"), { maxAge: 0 }); // 31557600000 turned off caching for now
 
+app.set("ServiceProvider", new ServiceProvider());
 
 // Add any formatters, you can access it by fmt.date in views like fmt.date.ymd()
 app.setFormatter("date", dateFormatter);
 
 // Lets register the controllers
+app.registerController(ServiceController);
 
 
 // start the express server

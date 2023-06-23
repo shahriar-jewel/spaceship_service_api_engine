@@ -3,7 +3,7 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    title Hotel Management System ERP
+    title Talent Pro Services
     meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name='viewport')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
@@ -23,7 +23,7 @@ html
                 h1
                     | Spaceship Service List &nbsp;&nbsp;
                     span.new-button
-                        a.btn.btn-primary.btn-sm(href='#' data-toggle='modal', data-target='#add-edit-permission-modal')
+                        a.btn.btn-primary.btn-sm(href='#' data-toggle='modal', data-target='#service-modal')
                             span.fa.fa-plus
                             |  &nbsp;Add New
             section.content
@@ -46,57 +46,62 @@ html
                                                      a(href='#') Image
                                                     th
                                                      a(href='#') Actions
+        include ./create
 
     script(src='/bower_components/jquery/dist/jquery.min.js')
     script(src='/bower_components/bootstrap/dist/js/bootstrap.min.js')
     script(src='/bower_components/datatables.net/js/jquery.dataTables.min.js')
     script(src='/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')
+    script(type="text/javascript" src='/dist/js/sweetalert.js')
     script.
      $('#dataTable').DataTable()
-    //-   "use strict";
-    //-     var KTDatatablesDataSourceAjaxServer = function () {
-    //-         var initTable1 = function () {
-    //-             var base_url = '/list';
-    //-             $('#dataTable').DataTable({
-    //-                 "responsive": true,
-    //-                 "searchDelay": 500,
-    //-                 "processing": true,
-    //-                 "pageLength": 10,
-    //-                 "lengthMenu": [[5,10, 15, 20,100, -1], [5,10, 15, 20,100, "Todos"]],
-    //-                 "serverSide": true,
-    //-                 "ajax": {
-    //-                     "url": base_url,
-    //-                     "dataType": 'json',
-    //-                 },
-    //-                 columns: [{
-    //-                     "data": 'id'
-    //-                 }, {
-    //-                     "data": 'node_id'
-    //-                 }, {
-    //-                     "data": 'number'
-    //-                 }, {
-    //-                     "data": 'title'
-    //-                 },{
-    //-                     "data": 'userLogin'
-    //-                 },{
-    //-                     "data": 'userType'
-    //-                 }, {
-    //-                     "data": 'state'
-    //-                 }, {
-    //-                     "data": 'author_association'
-    //-                 }, {
-    //-                     "data": 'actions'
-    //-                 }]
-
-    //-             });
-    //-         };
-    //-         return {
-    //-             init: function () {
-    //-                 initTable1();
-    //-             },
-    //-         };
-    //-     }();
-    //-     jQuery(document).ready(function () {
-    //-         KTDatatablesDataSourceAjaxServer.init();
-    //-     });
-    block script
+    
+    
+     $(document).on('click', '#button-create-service', function (e) {
+        $('#service-modal .modal-header').before('<span id="span-loading" style="position: absolute; height: 100%; width: 100%; z-index: 99; background: #6da252; opacity: 0.4;"><i class="fa fa-spinner fa-spin" style="font-size: 16em !important;margin-left: 30%;margin-top: 22%;"></i></span>');
+        var fd = new FormData(document.getElementById('service-form'));
+        $.ajax({
+            url: '/spaceship/service/create',
+            type: 'POST',
+            dataType: 'JSON',
+            data: fd,
+            cache:false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $('#button-create-service').button('loading');
+            },
+            complete: function() {
+                $('#button-create-service').button('reset');
+            },
+            success: function(json) {
+                console.log(json);
+                setTimeout(() => {
+                    $('#span-loading').remove();
+                    !json.error && $('#service-modal').modal('hide');
+                    swal({
+                        title: json.message,
+                        text: json.action,
+                        closeOnClickOutside: false,
+                        button: 'OK'
+                    }).then(() => { !json.error ? window.location.href = window.location.href.replace(/#.*$/, '') : '' });
+                },1000);
+            },
+            error: function(error, textStatus, errorThrown) {
+                $('#span-loading').remove();
+                if (error) {
+                    console.log(error);
+                }
+            }
+        });
+     });
+     function readURL(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#uploaded_image')
+            .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+        }
+     }
