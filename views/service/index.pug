@@ -3,7 +3,7 @@ html
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    title Talent Pro Services
+    title #{title}
     meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', name='viewport')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
@@ -21,7 +21,7 @@ html
         .content-wrapper
             section.content-header
                 h1
-                    | Spaceship Service List &nbsp;&nbsp;
+                    | #{pageTitle} &nbsp;&nbsp;
                     span.new-button
                         a.btn.btn-primary.btn-sm(href='#' data-toggle='modal', data-target='#service-modal')
                             span.fa.fa-plus

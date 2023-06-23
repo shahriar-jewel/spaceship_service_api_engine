@@ -17,6 +17,8 @@ export class ServiceController extends Controller {
      * Shall provide spaceship service data
      */
     public async index(req: HttpRequest, res: HttpResponse, next: NextFunc) {
+        res.bag.pageTitle = "Spaceship Service List";
+        res.bag.title = "Talent Pro Services";
         return res.view('service/index');
     }
     public async create(req: HttpRequest, res: HttpResponse, next: NextFunc) {
