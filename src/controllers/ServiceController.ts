@@ -11,6 +11,7 @@ export class ServiceController extends Controller {
     public onRegister(): void {
         this.onGet("/", this.index);
         this.onPost("/spaceship/service/create", this.create);
+        this.onGet("/spaceship/service/list", this.list);
     }
     /**
      * Shall provide spaceship service data
@@ -59,6 +60,45 @@ export class ServiceController extends Controller {
             });
         } catch (err) {
             return res.send({ status: 500, error: true, message: err, action: "try later", data: null });
+        }
+    }
+    public async list(req: HttpRequest, res: HttpResponse, next: NextFunc) {
+        const searchStr: any = req.query.search;
+        let startIndex = Number(req.query?.start);
+        if (!startIndex || startIndex < 1) startIndex = 1;
+        const pageSize: any = req.query?.length ? req.query.length : 10;
+        const service = await this.ServiceProvider.getList(startIndex, pageSize, searchStr); // get spaceship service list from provider
+        const populateBag: any = [];
+        let nestedData = {};
+        try {
+            if (service) {
+                (service.list).map((row: any, i: number) => {
+                    let status;
+                    if(row.isActive){
+                        status = "<span class='label label-success'>Active</span>";
+                    }else{
+                        status = "<span class='label label-primary'>Inactive</span>";
+                    }
+                    nestedData = {
+                        serviceId: row.serviceId,
+                        title: row.title,
+                        description: row.description,
+                        image: '<img src="uploads/images/' + row.image + '" class="zoom profile-user-img img-responsive img-circle img-sm" alt="Service Image">',
+                        status,
+                    };
+                    populateBag.push(nestedData);
+                })
+            }
+            const tableData = JSON.stringify({
+                "draw": 1,
+                "iTotalRecords": service.count,
+                "iTotalDisplayRecords": service.count,
+                "limit": pageSize,
+                "aaData": populateBag
+            });
+            return res.send(tableData);
+        } catch (error) {
+            return res.send({ status: 400, error: true, message: 'Something went wrong', action: "", data: error });
         }
     }
 }

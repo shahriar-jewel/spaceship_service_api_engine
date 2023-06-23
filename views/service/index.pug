@@ -32,8 +32,8 @@ html
                             .box.box-parrot
                                 
                                 .box-body 
-                                    .table.table-responsive
-                                        table#dataTable.table.table-striped.table-hover
+                                    .table
+                                        table#serviceTable.table.table-striped.table-hover
                                             thead
                                                 tr
                                                     th 
@@ -45,7 +45,7 @@ html
                                                     th 
                                                      a(href='#') Image
                                                     th
-                                                     a(href='#') Actions
+                                                     a(href='#') Status
         include ./create
 
     script(src='/bower_components/jquery/dist/jquery.min.js')
@@ -54,8 +54,43 @@ html
     script(src='/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')
     script(type="text/javascript" src='/dist/js/sweetalert.js')
     script.
-     $('#dataTable').DataTable()
-    
+     "use strict";
+        var KTDatatablesDataSourceAjaxServer = function () {
+            var initTable1 = function () {
+                var base_url = '/spaceship/service/list';
+                $('#serviceTable').DataTable({
+                    "responsive": true,
+                    "searchDelay": 500,
+                    "processing": true,
+                    "pageLength": 10,
+                    "lengthMenu": [[5,10, 15, 20,100, -1], [5,10, 15, 20,100, "Todos"]],
+                    "serverSide": true,
+                    "ajax": {
+                        "url": base_url,
+                        "dataType": 'json',
+                    },
+                    columns: [{
+                        "data": 'serviceId'
+                    }, {
+                        "data": 'title'
+                    }, {
+                        "data": 'description'
+                    }, {
+                        "data": 'image'
+                    },{
+                        "data": 'status'
+                    }]
+                });
+            };
+            return {
+                init: function () {
+                    initTable1();
+                },
+            };
+        }();
+        jQuery(document).ready(function () {
+            KTDatatablesDataSourceAjaxServer.init();
+        });
     
      $(document).on('click', '#button-create-service', function (e) {
         $('#service-modal .modal-header').before('<span id="span-loading" style="position: absolute; height: 100%; width: 100%; z-index: 99; background: #6da252; opacity: 0.4;"><i class="fa fa-spinner fa-spin" style="font-size: 16em !important;margin-left: 30%;margin-top: 22%;"></i></span>');

@@ -1,4 +1,4 @@
-import { IService, IServiceProvider } from "../core/IServiceProvider";
+import { IService, IServicePage, IServiceProvider } from "../core/IServiceProvider";
 import ServiceModel from "../models/ServiceModel";
 
 export class ServiceProvider implements IServiceProvider {
@@ -12,5 +12,26 @@ export class ServiceProvider implements IServiceProvider {
     }
     public async create(servicePayload: IService): Promise<IService> {
         return await ServiceModel.create(servicePayload);
+    }
+    public async getList(startIndex: number = 1, size: number = 10, searchStr?: any): Promise<IServicePage> {
+        const bag: any = [];
+        let recordsFiltered;
+        let services;
+        const recordsTotal = await ServiceModel.countDocuments({});
+        try {
+            if (searchStr.value === '') {
+                const regex = new RegExp(searchStr, "i");
+                searchStr = { $or: [{ 'title': regex }, { 'description': regex }] };
+                services = await ServiceModel.find(searchStr).sort({ 'createdAt': -1 });
+                recordsFiltered = await ServiceModel.countDocuments(searchStr);
+            } else {
+                searchStr = {};
+                services = await ServiceModel.find({}).limit(size).skip(startIndex).sort({ 'createdAt': -1 });
+                recordsFiltered = recordsTotal;
+            }
+            return { list: services, size, page: startIndex, count: recordsFiltered };
+        } catch (error) {
+            return { list: [], size, page: startIndex, count: 0 };
+        }
     }
 }
